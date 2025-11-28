@@ -1,0 +1,49 @@
+name: SpeechPractice
+options:
+  bundleIdPrefix: com.speechpractice
+  deploymentTarget:
+    iOS: "15.0"
+  developmentLanguage: en
+
+settings:
+  base:
+    PRODUCT_NAME: SpeechPractice
+    SWIFT_VERSION: "5.0"
+    TARGETED_DEVICE_FAMILY: "1,2"
+
+targets:
+  SpeechPractice:
+    type: application
+    platform: iOS
+    sources:
+      - path: SpeechPractice
+    info:
+      path: SpeechPractice/Resources/Info.plist
+      properties:
+        CFBundleDisplayName: Speech Practice
+        CFBundleIdentifier: com.speechpractice.SpeechPractice
+        CFBundleInfoDictionaryVersion: "6.0"
+        CFBundleName: $(PRODUCT_NAME)
+        CFBundlePackageType: APPL
+        CFBundleShortVersionString: "1.0"
+        CFBundleVersion: "1"
+        LSRequiresIPhoneOS: true
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        NSMicrophoneUsageDescription: "This app needs access to the microphone to record your speech practice sessions."
+    settings:
+      base:
+        INFOPLIST_FILE: SpeechPractice/Resources/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: com.speechpractice.SpeechPractice
+        ENABLE_PREVIEWS: true
+        DEVELOPMENT_ASSET_PATHS: "\"SpeechPractice/Resources\""
