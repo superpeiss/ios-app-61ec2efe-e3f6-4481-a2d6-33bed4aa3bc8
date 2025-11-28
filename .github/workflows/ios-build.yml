@@ -25,18 +25,36 @@ jobs:
 
       - name: Build iOS app
         run: |
+          set -o pipefail
           xcodebuild -scheme SpeechPractice \
             -destination 'generic/platform=iOS' \
+            -allowProvisioningUpdates \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
             clean build \
-            | tee build.log
+            2>&1 | tee build.log
 
-      - name: Check build success
+          BUILD_EXIT_CODE=$?
+          echo "Build exit code: $BUILD_EXIT_CODE"
+
+          if [ $BUILD_EXIT_CODE -eq 0 ]; then
+            echo "✅ BUILD SUCCEEDED (exit code 0)"
+            echo "BUILD_SUCCEEDED" >> build.log
+          else
+            echo "❌ BUILD FAILED (exit code $BUILD_EXIT_CODE)"
+            echo "BUILD_FAILED" >> build.log
+            exit 1
+          fi
+
+      - name: Verify build success
         run: |
-          if grep -q "BUILD SUCCEEDED" build.log; then
-            echo "Build succeeded!"
+          if grep -q "BUILD_SUCCEEDED" build.log || grep -q "BUILD SUCCEEDED" build.log; then
+            echo "✅ Build verification passed!"
             exit 0
           else
-            echo "Build failed!"
+            echo "❌ Build verification failed!"
+            grep -i "error" build.log | tail -20 || echo "No specific errors found"
             exit 1
           fi
 
